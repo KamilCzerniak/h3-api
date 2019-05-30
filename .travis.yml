@@ -11,8 +11,8 @@ env:
 before_install:
   - docker pull openjdk:8-jdk-alpine
 script:
-  - server/mvn test
-  - server/mvn clean package
+  - ./server/mvn test
+  - ./server/mvn gitclean package
 after_success:
   - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
