@@ -14,9 +14,9 @@ before_script: cd server
 script:
   - mvn test
   - mvn clean package
-after_success:
-  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker-compose build
-  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
-  - docker push $IMAGE_NAME:$TAG
+#after_success:
+#  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
+#  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+#  - docker-compose build
+#  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+#  - docker push $IMAGE_NAME:$TAG
