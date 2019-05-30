@@ -13,7 +13,7 @@ before_install:
 before_script: cd server
 script:
   - mvn test
-  - mvn gitclean package
+  - mvn clean package
 after_success:
   - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
