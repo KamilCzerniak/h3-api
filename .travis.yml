@@ -9,14 +9,14 @@ env:
     - secure: "NUcpjP74OCSlUA04bwESemzP+XCmLlz/HN8x4NJBqotXjH2ewdoDPZWI4CfN4BERjb2IN90RTGJH3kfLlYkub5JZaQu2/Cf0jA+fhJFG35PrQtNncxJTOU1YP8jVadodx/8CS2VtMG2qgaqsmykytbe9SIQ2x2rjlSwSp/LH1YZP4iNcsGgaXH5b6tUSdNxMLKwQ1w0ABIcGvd2SefhIQOl0eO/cDamzyKJkNLM73TXs1D5VlSlfY/heru2cKrXsDQse4ZvlsdXy6TBs0DTsA6FXpy2J2AjbOConbV3gf356uqTCOgM6fYDBuCk91hSR5jX9yKPpwUiQEmE5fYu0hxOCepYWI0BfV1c3Hjfw7S5IowF1dwcVbiPnPWfDrvXX8a5OCoubgr0/xAM//EDhlqLsdb+gTmmYVx/p4tL4GwDTsIqhtTUThaIhaV1I/oxD3QmbicYMTrgVDT9V/W9OERgdn7kpfAanbE/DN6W3aTGXlw6GEmGu4xc1bNiJLj+TSP1XuxECFd6230m2YykBLCM5RrQ6WDT3VnAj+vAQRWEpiDeI38UJJ1Q+5lvLdUsYX6h+1JXHqGOai6JdXkjkyoKYe7FFmQqsY+putyHa9X8d+DtHgsZY02HAXS9bp07j7j1ysnNNfH862I21rX99l24EIevdQYi3NU3LFVx6z0I="
     - secure: "yHwDC73DoF9togpxzNRA6xnt0W74jOieA1RYoIV/57ym3A6IxuTUcAme1d2lTDfguqguQaYPoeKpOKPzK0fgtOXQeVwJuhzXzudmIVK4/ycCFlhrDjrGKYC4etVyPCZnuIGKLjb69ZVxFviU6yQIbPHcHX85sjx1dWWnn37xSGjDsJRpAIqTzUAx+kSQQmbWPMUxNL5KpH24jjKQaOTVHNEvMvBm/DJlYcnGKbUM2bRDAV3dPzy+0oADNmwRjeVmg6YZwJpUARHRyFMLVb4ttXkDKXv5tXMC/edo/KwL929O93JhVLjPk5IEAfZTblt1e0+V9lKBnSyz9eueZLonl8iCzoApPo9/8WYFkPvuGcpiHNUl2kNp9EaYYEmQCN5hQEtnkBbr9L5ozEXLwzWyP+vpOs0ES40yVhID8hGa8yu0BpRLt6tcwhV9XkNW2LbR++Z0/eMyq5rDm8sJ9XCPtqXBz0BQzS0vGfPShaO6Qyqbizuyb+mP/q2NhwMv/0z9p5XPpmKzS7rO5YqJ+pSQm0Dn8osndlmjhaWyHNjGJZOxWSaT38BpuXiHYN0EuxXpu9E9HMLwPLWI8A0SHVJMj1VlqEd/9Zlln4dMHNPY2GggLAG0O3dOtSFWCAH0HbQglDAHU0yNryDXIJhJ4lAFA3DU7LjeP1P1Y0ugM07drTE="
 before_install:
-  - docker pull openjdk:8-jdk-alpine
+  - docker pull openjdk:8-jre-alpine
 before_script: cd server
 script:
   - mvn test
   - mvn clean package
-#after_success:
-#  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
-#  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-#  - docker-compose build
-#  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
-#  - docker push $IMAGE_NAME:$TAG
+after_success:
+  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker-compose build
+  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:$TAG
